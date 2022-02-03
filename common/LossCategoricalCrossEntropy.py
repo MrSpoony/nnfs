@@ -5,6 +5,9 @@ from common.Loss import Loss
 
 class LossCategoricalCrossEntropy(Loss):
 
+    def __init__(self):
+        self.dinputs = None
+
     def forward(self, y_prediction, y_true):
         samples = len(y_prediction)
 
@@ -24,3 +27,15 @@ class LossCategoricalCrossEntropy(Loss):
             correct_confidences = [[]]
 
         return -np.log(correct_confidences)
+
+    def backward(self, dvalues, y_true):
+        samples = len(dvalues)
+        labels = len(dvalues[0])
+
+        # If the true values are in the format [0, 2, 3, 1]
+        if len(y_true.shape) == 1:
+            y_true = np.eye(labels)[y_true]
+
+        self.dinputs = -y_true / dvalues
+
+        self.dinputs = self.dinputs / samples
