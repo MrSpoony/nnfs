@@ -4,7 +4,7 @@ import numpy as np
 class ActivationReLU:
 
     def __init__(self):
-        self.inputs = None
+        self.inputs = 0
         self.dinputs = None
         self.output = None
 

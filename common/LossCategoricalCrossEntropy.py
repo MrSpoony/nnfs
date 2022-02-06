@@ -24,7 +24,7 @@ class LossCategoricalCrossEntropy(Loss):
         elif len(y_true.shape) == 2:
             correct_confidences = np.sum(y_prediction_clipped * y_true, axis=1)
         else:
-            correct_confidences = [[]]
+            correct_confidences = np.empty_like(y_true)
 
         return -np.log(correct_confidences)
 
